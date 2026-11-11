@@ -11,7 +11,7 @@
                 </div>
             [% ELSE %]
                 <div class="update-text">
-                    [% add_links( update.text ) | html_para %]
+                    [% update.text | add_links | html_para %]
 
                     <p class="meta-2">
                         <a name="update_[% update.id %]"></a>

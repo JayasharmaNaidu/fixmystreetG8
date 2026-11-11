@@ -19,6 +19,8 @@
 <h1>[% loc('Contact the team') %]</h1>
  
 <form method="post" action="/contact/submit" class="validate">
+    <input type="hidden" name="token" value="[% csrf_token %]">
+    <input type="hidden" name="s" value="[% s %]">
     <fieldset>
         [% INCLUDE 'errors.html' %]
 
