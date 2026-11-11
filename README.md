@@ -47,9 +47,9 @@ minutes. The site shows 502 until it's ready.
 | Emails (MailHog inbox) | <http://localhost:8025> |
 | Admin | <http://localhost:8000/admin> |
 
-To get into the admin, go to `/auth`, enter `superuser@example.org`, click **Email
-me a link to sign in**, and open the link in MailHog. The password box doesn't show,
-so use the email link.
+To get into the admin, go to `/auth`, enter `superuser@example.org`, click **Sign in
+with a password** and use `5up3r53cr3t`. You can also click **Email me a link to sign
+in** and open the link in MailHog.
 
 `docker compose down` stops everything and keeps your data. Adding `-v` also
 deletes the database.

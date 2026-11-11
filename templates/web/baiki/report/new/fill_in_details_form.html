@@ -89,11 +89,11 @@
             [%- END %]
 
             [% IF c.cobrand.allow_photo_upload %]
+                <input type="hidden" name="upload_fileid" value="[% upload_fileid %]">
                 <label for="form_photo">[% loc('Photo') %]</label>
                 [% IF upload_fileid || report.photo %]
                     [% IF upload_fileid %]
                         <img align="right" src="/photo/[% upload_fileid %].temp.jpeg" alt="">
-                        <input type="hidden" name="upload_fileid" value="[% upload_fileid %]">
                     [% END %]
 
                     <p>[% loc('You have already attached a photo to this report, attaching another one will replace it.') %]</p>
