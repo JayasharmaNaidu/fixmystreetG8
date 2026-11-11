@@ -36,7 +36,7 @@ using_frontend_proxy: 1
 # Email domain used for emails, and contact name/email for admin use.
 EMAIL_DOMAIN: '127.0.0.1.xip.io'
 CONTACT_EMAIL: 'help@127.0.0.1.xip.io'
-CONTACT_NAME: 'FixMyStreet'
+CONTACT_NAME: 'AduanKu'
 # Address used for emails you don't expect a reply to (e.g. confirmation
 # emails); can be same as CONTACT_EMAIL above, of course, if you don't have a
 # special address.
@@ -61,7 +61,7 @@ STAGING_FLAGS:
 
 # What to use as front page/alert example places placeholder
 # Defaults to High Street, Main Street
-EXAMPLE_PLACES: [ 'High Street', 'Main Street' ]
+EXAMPLE_PLACES: [ 'Jalan Ampang', 'Petaling Jaya' ]
 
 # An array of languages for the site, in the following format:
 # <language code>,<pretty name>,<locale>
@@ -70,7 +70,7 @@ LANGUAGES:
 
 # If you're running an installation that is being used in a different time zone
 # from the server, you can set the time zone here (standard time zone string)
-TIME_ZONE: ""
+TIME_ZONE: 'Asia/Kuala_Lumpur'
 
 # File locations for cached geocoding results.
 GEO_CACHE: '../cache/'
@@ -112,7 +112,7 @@ PHOTO_STORAGE_OPTIONS:
 #   MAPIT_URL: 'http://global.mapit.mysociety.org/'
 # And then specify whichever type code have the boundaries you want:
 #   MAPIT_TYPES: [ 'O06' ]
-MAPIT_URL: ''
+MAPIT_URL: 'http://localhost:9000/fakemapit/'
 MAPIT_TYPES: [ 'ZZZ' ]
 
 # If the MapIt you're using in MAPIT_URL requires an API key
@@ -188,9 +188,7 @@ MAP_TYPE: 'OSM'
 # This also allows development servers to map to different cobrands if needed,
 # using DNS subdomains for example.
 ALLOWED_COBRANDS:
-  - cobrand1
-  - cobrand2: 'hostname_substring2'
-  - cobrand3
+  - baiki
 
 # This is used in e.g. "offensive report" emails to provide a link directly to
 # the admin interface. Defaults to BASE_URL with "/admin" on the end.
@@ -211,9 +209,9 @@ TWITTER_SECRET: ''
 # If you wish to send email through a SMTP server elsewhere, change these
 # variables. SMTP_TYPE should be one of '', 'ssl' or 'tls'. SMTP_PORT will
 # default to 587 (tls), 465 (ssl), or 25.
-SMTP_SMARTHOST: 'localhost'
+SMTP_SMARTHOST: 'mailhog.svc'
 SMTP_TYPE: ''
-SMTP_PORT: ''
+SMTP_PORT: '1025'
 SMTP_USERNAME: ''
 SMTP_PASSWORD: ''
 

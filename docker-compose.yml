@@ -1,4 +1,4 @@
-version: '3'
+name: fms26
 
 services:
   nginx:
@@ -14,13 +14,33 @@ services:
         aliases:
           - nginx.svc
   fixmystreet:
-    image: fixmystreet/fixmystreet:stable
+    image: fixmystreet/fixmystreet:v2.6
     tty: true
+    command:
+      - sh
+      - -c
+      - >-
+        /usr/local/preinit/99-fixmystreet &&
+        exec su fms -c '/var/www/fixmystreet/fixmystreet/script/server --port 9000 --env deployment'
     depends_on:
-      - postgres
-      - memcached
+      postgres:
+        condition: service_healthy
+      memcached:
+        condition: service_started
+      mailhog:
+        condition: service_started
     volumes:
       - ./conf/general.yml-docker:/var/www/fixmystreet/fixmystreet/conf/general.yml
+      - ./perllib/FixMyStreet/Cobrand/Baiki.pm:/var/www/fixmystreet/cobrand/perllib/FixMyStreet/Cobrand/Baiki.pm:ro
+      - ./templates/web/baiki:/var/www/fixmystreet/cobrand/templates/web/baiki
+      - ./templates/email/baiki/site-name.txt:/var/www/fixmystreet/cobrand/templates/email/baiki/site-name.txt:ro
+      - ./templates/email/baiki/signature.txt:/var/www/fixmystreet/cobrand/templates/email/baiki/signature.txt:ro
+      - ./web/cobrands/baiki:/var/www/fixmystreet/cobrand/web/cobrands/baiki
+      - ./web/i/sinar.png:/var/www/fixmystreet/fixmystreet/web/i/sinar.png:ro
+      - ./web/i/TI-M_Logo.jpg:/var/www/fixmystreet/fixmystreet/web/i/TI-M_Logo.jpg:ro
+      - ./web/i/isif.png:/var/www/fixmystreet/fixmystreet/web/i/isif.png:ro
+      - ./perllib/FixMyStreet/Geocode.pm:/var/www/fixmystreet/fixmystreet/perllib/FixMyStreet/Geocode.pm:ro
+      - ./perllib/FixMyStreet/Geocode/OSM.pm:/var/www/fixmystreet/fixmystreet/perllib/FixMyStreet/Geocode/OSM.pm:ro
     environment:
       POSTGRES_PASSWORD: 'password'
       FMS_DB_HOST: 'postgres.svc'
@@ -30,6 +50,8 @@ services:
       FMS_ROOT: '/var/www/fixmystreet/fixmystreet'
       SUPERUSER_EMAIL: 'superuser@example.org'
       SUPERUSER_PASSWORD: '5up3r53cr3t'
+      PERL_LWP_SSL_CA_FILE: '/etc/ssl/certs/ca-certificates.crt'
+      TZ: 'Asia/Kuala_Lumpur'
     networks:
       default:
         aliases:
@@ -37,6 +59,13 @@ services:
   postgres:
     image: fixmystreet/postgres:9.6-en_GB
     restart: always
+    ports:
+      - "127.0.0.1:5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
     volumes:
       - fixmystreet-pgdata:/var/lib/postgresql/data/pgdata
     environment:
@@ -53,6 +82,14 @@ services:
       default:
         aliases:
           - memcached.svc
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "8025:8025"
+    networks:
+      default:
+        aliases:
+          - mailhog.svc
 
 volumes:
   fixmystreet-pgdata:
