@@ -20,8 +20,9 @@ services:
       - sh
       - -c
       - >-
-        /usr/local/preinit/99-fixmystreet &&
-        exec su fms -c '/var/www/fixmystreet/fixmystreet/script/server --port 9000 --env deployment'
+           localedef -i ms_MY -f UTF-8 ms_MY.UTF-8;
+           /usr/local/preinit/99-fixmystreet &&
+           exec su fms -c '/var/www/fixmystreet/fixmystreet/script/server --port 9000 --env deployment'
     depends_on:
       postgres:
         condition: service_healthy
